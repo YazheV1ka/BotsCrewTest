@@ -1,4 +1,4 @@
-package models;
+package org.example.models;
 
 public enum Degree {
     ASSISTANT,

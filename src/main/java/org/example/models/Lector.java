@@ -1,23 +1,37 @@
-package models;
+package org.example.models;
 
-import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
+@Data
+@Builder
+@NoArgsConstructor(force = true)
+@AllArgsConstructor
+@Table(name = "lector")
 @Entity
-
 public class Lector {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "lector_id", nullable = false)
+    private int id;
 
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @ManyToMany(mappedBy = "lectors")
-    private Set<Department> departments = new HashSet<>();
+    @ManyToMany
+    @JoinTable(name = "lector_department", joinColumns = @JoinColumn(name = "lector_id"), inverseJoinColumns = @JoinColumn(name = "department_id"))
+    private List<Department> departments = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
     private Degree degree;
 
-    // Getters and setters
+    @Column(name = "salary")
+    private int salary;
+
 }
